@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+main > .ng-star-inserted {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+mat-header-cell, mat-cell {
+  text-align: center;
+}
+
+.flex-space {
+  flex: 1;
+}
+
+.server-post-content-tip {
+  font-size: 15px;
+}

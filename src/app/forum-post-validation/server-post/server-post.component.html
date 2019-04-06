@@ -1,0 +1,186 @@
+<div class="wrapper">
+  <mat-card>
+    <mat-card-title class="card-title" [style.margin-bottom]="noticeOpenState ? '' : '0'">
+      <mat-icon color="warn">notification_important</mat-icon>
+      <span class="card-title">注意事项</span>
+      <mat-slide-toggle color="accent" [(ngModel)]="noticeOpenState" (change)="noticePanelToggle()">
+        点击{{ noticeOpenState ? '收起' : '展开' }}</mat-slide-toggle>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-expansion-panel [expanded]="noticeOpenState">
+        <mat-list class="notice-list">
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>该验证工具基于<strong>2019年3月6日</strong>版本的版规制作。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>不保证能检测出所有不符合版规的问题，可能出现漏判、误判，一切以版主评判为准。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>为了大家养成仔细阅读版规的良好习惯，本工具将只给出违反版规的原因，而不会给出解决方案，请仔细阅读版规后再做出修改！</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>目前支持(或部分支持)检测的版规有：1-2、3-1、3-2、3-3(仅检测字数)、3-4、3-5、3-6、3-7、3-9-1。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>除了必填以外没有其它版规要求的宣传帖信息，以及程序难以检测(如不同背景下的瞎眼亮色)的版规，暂不提供检测。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>部分检测项可能较为严格，如果您经过<strong>再三确认</strong>后仍然认为自己没有违反版规，可无视违规提示。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>如果有违反版规的内容但本工具未检测出的，或希望能添加检测的，欢迎在
+              <a mat-button color="accent" href="http://www.mcbbs.net/thread-682152-1-1.html">此处</a>提交。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>作者保留所有权利。</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+  <form [formGroup]="form">
+    <mat-form-field
+      [style.padding-bottom]="isInvalid('title') ? keysCount(form.get('title').errors) * 13 + 'px' : 0">
+      <input matInput placeholder="标题" formControlName="title" required>
+      <mat-error *ngIf="isInvalid('title')">
+        <ul>
+          <li *ngFor="let err of form.get('title').errors | keyvalue">{{ err | postError }}</li>
+        </ul>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field
+      [style.padding-bottom]="isInvalid('name') ? keysCount(form.get('name').errors) * 13 + 'px' : 0">
+      <input matInput placeholder="服务器名称" formControlName="name"
+             (change)="form.get('title').updateValueAndValidity()" required>
+      <mat-error *ngIf="isInvalid('name')">
+        <ul>
+          <li *ngFor="let err of form.get('name').errors | keyvalue">{{ err | postError }}</li>
+        </ul>
+      </mat-error>
+    </mat-form-field>
+    <div class="server-version">
+      <label>服务器版本</label>
+      <div class="server-version-select">
+        <mat-checkbox
+          *ngFor="let v of ['1.13.2','1.13.1','1.13','1.12.2','1.12.1','1.12','1.11.2','1.11','1.10.X','1.9.4','1.9','1.8.X','1.7.10','1.7.2','1.6.4']; let i = index;"
+          (change)="server.version[v] = $event.checked ? -i - 1 : false; resetCurrentVersion(); form.get('title').updateValueAndValidity();"
+          formControlName="serverVersion">{{ v }}</mat-checkbox>
+        <mat-checkbox
+          (change)="server.version['other'] = $event.checked; resetCurrentVersion(); form.get('title').updateValueAndValidity();"
+          formControlName="serverVersion">
+          其它版本
+        </mat-checkbox>
+      </div>
+    </div>
+    <mat-error *ngIf="form.get('serverVersion').dirty && !this.currentVersion" [style.font-size]="'75%'">
+      <ul>
+        <li>{{ {key: 'required', value: true} | postError }}</li>
+      </ul>
+    </mat-error>
+    <div class="profit-type">
+      <mat-form-field
+        [style.padding-bottom]="isInvalid('welfare') ? keysCount(form.get('welfare').errors) * 13 + 'px' : 0">
+        <mat-label>盈利模式</mat-label>
+        <mat-select formControlName="welfare" (selectionChange)="form.get('content').updateValueAndValidity()" required>
+          <mat-option>请选择</mat-option>
+          <mat-option [value]="true">公益服务器</mat-option>
+          <mat-option [value]="false">商业服务器</mat-option>
+        </mat-select>
+        <mat-error *ngIf="isInvalid('welfare')">
+          <ul>
+            <li *ngFor="let err of form.get('welfare').errors | keyvalue">{{ err | postError }}</li>
+          </ul>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="server-type">
+      <mat-form-field
+        [style.padding-bottom]="isInvalid('serverType') ? keysCount(form.get('serverType').errors) * 13 + 'px' : 0">
+        <mat-label>服务器类型</mat-label>
+        <mat-select (selectionChange)="server.specialClient = undefined" formControlName="serverType" required>
+          <mat-option>请选择</mat-option>
+          <mat-option value="mod">Mod服务器</mat-option>
+          <mat-option value="vanilla">纯净服务器</mat-option>
+          <mat-option value="other">其它（下面注明）</mat-option>
+        </mat-select>
+        <mat-error *ngIf="isInvalid('serverType')">
+          <ul>
+            <li *ngFor="let err of form.get('serverType').errors | keyvalue">{{ err | postError }}</li>
+          </ul>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="server.serverType === 'mod'"
+                      [style.padding-bottom]="isInvalid('specialClient') ? keysCount(form.get('specialClient').errors) * 13 + 'px' : 0">
+        <mat-label>是否需要专用客户端</mat-label>
+        <mat-select formControlName="specialClient" required>
+          <mat-option>请选择</mat-option>
+          <mat-option [value]="true">需要下载专用客户端</mat-option>
+        </mat-select>
+        <mat-error *ngIf="isInvalid('specialClient')">
+          <ul>
+            <li *ngFor="let err of form.get('specialClient').errors | keyvalue">{{ err | postError }}</li>
+          </ul>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="server.serverType === 'vanilla'"
+                      [style.padding-bottom]="isInvalid('specialClient') ? keysCount(form.get('specialClient').errors) * 13 + 'px' : 0">
+        <mat-label>是否需要专用客户端</mat-label>
+        <mat-select formControlName="specialClient" required>
+          <mat-option>请选择</mat-option>
+          <mat-option [value]="false">不需要下载专用客户端</mat-option>
+          <mat-option [value]="true">需要下载专用客户端</mat-option>
+        </mat-select>
+        <mat-error *ngIf="isInvalid('specialClient')">
+          <ul>
+            <li *ngFor="let err of form.get('specialClient').errors | keyvalue">{{ err | postError }}</li>
+          </ul>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="server.serverType === 'other'"
+                      [style.padding-bottom]="isInvalid('specialClient') ? keysCount(form.get('specialClient').errors) * 13 + 'px' : 0">
+        <mat-label>是否需要专用客户端</mat-label>
+        <mat-select formControlName="specialClient" required>
+          <mat-option>请选择</mat-option>
+          <mat-option [value]="false">其它</mat-option>
+        </mat-select>
+        <mat-error *ngIf="isInvalid('specialClient')">
+          <ul>
+            <li *ngFor="let err of form.get('specialClient').errors | keyvalue">{{ err | postError }}</li>
+          </ul>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field *ngIf="server.specialClient"
+                    [style.padding-bottom]="isInvalid('clientDownload') ? keysCount(form.get('clientDownload').errors) * 13 + 'px' : 0">
+      <input matInput placeholder="客户端下载地址" formControlName="clientDownload" required>
+      <mat-error *ngIf="isInvalid('clientDownload')">
+        <ul>
+          <li *ngFor="let err of form.get('clientDownload').errors | keyvalue">{{ err | postError }}</li>
+        </ul>
+      </mat-error>
+    </mat-form-field>
+    <span class="flex-space"></span>
+    <mat-form-field
+      [style.padding-bottom]="isInvalid('content') ? keysCount(form.get('content').errors) * 13 + 'px' : 0">
+      <textarea matInput placeholder="帖子内容" rows="7"
+                matTooltip="请选中MCBBS的帖子编辑页的“纯文本”选择框，并将“纯文本”代码复制到此处"
+                matTooltipPosition="above"
+                matTooltipClass="server-post-content-tip"
+                matTooltipHideDelay="300"
+                formControlName="content" required></textarea>
+      <mat-error *ngIf="isInvalid('content')">
+        <ul>
+          <li *ngFor="let err of form.get('content').errors | keyvalue">{{ err | postError }}</li>
+        </ul>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

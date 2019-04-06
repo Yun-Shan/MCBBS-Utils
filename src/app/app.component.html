@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <header>
+    <mat-toolbar color="primary">
+      <span>{{ title }}</span>
+      <span class="brand-spacer"></span>
+      <nav>
+        <button mat-button routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>
+      </nav>
+    </mat-toolbar>
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <div class="copyright">
+      Copyright © 2017 - 2019 xingyunhm.com 版权所有
+    </div>
+  </footer>
+</div>

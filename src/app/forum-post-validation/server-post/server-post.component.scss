@@ -1,0 +1,72 @@
+.wrapper, form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-content: center;
+}
+
+.wrapper {
+  margin: 2% 12%;
+  @media (max-width: 999px) {
+    margin: 2% 8%;
+  }
+}
+
+.notice-list {
+  mat-list-item {
+    height: auto;
+    padding: 5px 0;
+  }
+}
+
+mat-card {
+  margin-bottom: 25px;
+  padding: 10px;
+
+  mat-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+
+    mat-slide-toggle {
+      margin-left: 30px;
+      font-size: 14px;
+    }
+
+    mat-icon {
+      margin-left: 15px;
+      margin-right: 3px;
+      font-size: 24px;
+    }
+  }
+}
+
+.server-version {
+  display: flex;
+  flex-wrap: wrap;
+
+  label {
+    width: 15%;
+  }
+
+  .server-version-select {
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    mat-checkbox {
+      width: 70px;
+      padding-right: 25px;
+    }
+  }
+}
+
+.profit-type, .server-type {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-error > ul {
+  padding-left: 15px;
+  margin: 0;
+}

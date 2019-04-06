@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MCBBS Utils</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.min.js"></script>
+  <script>
+    // 初始化MCBBS中在当期js或其它js定义的变量或函数
+    var re, DISCUZCODE = [];
+    var EXTRAFUNC = {};
+    var STATICURL = 'static/';
+    var postimg_type = [];
+    // parsetype 暂时恒为underfined，设为0
+    var parsetype = 0;
+    postimg_type["hrline"] = ["line9.png", "line6.png", "line1.png", "line4.png", "4.gif", "line2.png", "2.gif", "line5.png", "0.gif", "3.gif", "1.gif", "line7.png", "line3.png", "line8.png", "5.gif"];
+    postimg_type["postbg"] = ["2.jpg", "bg6.png", "3.jpg", "bg2.png", "1.jpg", "bg1.png", "bg5.png", "bg3.png", "0.gif", "bg10.png", "bg7.png", "bg9.png", "bg4.png", "bg8.png"];
+    var allowbbcode = 1;
+    var allowhtml = 0;
+    var allowsmilies = 1;
+    var allowimgcode = 1;
+  </script>
+  <script src="http://www.mcbbs.net/data/cache/common.js"></script>
+  <script src="http://www.mcbbs.net/data/cache/bbcode.js"></script>
+</body>
+</html>
