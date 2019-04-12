@@ -1,5 +1,6 @@
 # MCBBSUtils
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)  
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
 ## Development server
