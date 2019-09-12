@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Server } from './server';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
-import * as $ from 'jquery';
-
+declare var $: any;
 declare var window: any;
 
 @Component({
@@ -103,7 +102,7 @@ export class ServerPostComponent implements OnInit {
               errs['3-3'] = '宣传帖内容必须在100字以上';
             }
             if (!$('img', $preview).length) {
-              errs['*3-3'] = '建议使用游戏截图介绍服务器';
+              errs['*3-3'] = '※建议使用游戏截图介绍服务器';
             }
 
             const $colors = $('font[color]', $preview);
@@ -126,7 +125,7 @@ export class ServerPostComponent implements OnInit {
               const dis = Math.sqrt((2 + rmean / 256) * (R ** 2) + 4 * (G ** 2) + (2 + (255 - rmean) / 256) * (B ** 2));
               console.log(dis);
               if (dis < 550) {
-                errs['3-5'] = '疑似有妨碍阅读的字体颜色，请仔细检查';
+                errs['*3-5'] = '※疑似有妨碍阅读的字体颜色，请仔细检查';
               }
             });
 
