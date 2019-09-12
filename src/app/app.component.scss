@@ -1,3 +1,12 @@
+.wrapper {
+  height: auto;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, .03);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 header {
   box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   position: fixed;
@@ -5,6 +14,21 @@ header {
   left: 0;
   right: 0;
   z-index: 999;
+
+  mat-toolbar {
+    .brand-spacer {
+      margin-left: 10px;
+    }
+
+    [mat-stroked-button],[mat-button] {
+      margin: 0 5px;
+    }
+
+    .friend-link-title {
+      font-size: 17px;
+      margin: 0 5px;
+    }
+  }
 }
 
 main {
@@ -15,15 +39,6 @@ main {
   height: 100%;
 }
 
-.wrapper {
-  height: auto;
-  min-height: 100%;
-  background-color: rgba(0, 0, 0, .03);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
 footer {
   position: relative;
   height: 80px;
@@ -32,6 +47,3 @@ footer {
   justify-content: center;
 }
 
-.brand-spacer {
-  margin-left: 10px;
-}

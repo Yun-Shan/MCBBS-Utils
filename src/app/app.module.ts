@@ -7,10 +7,12 @@ import { SharedModule } from './share/shared.module';
 import { ForumPostValidationModule } from './forum-post-validation/forum-post-validation.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,6 @@ export class ServerPostComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.form = new FormGroup({
       title: new FormControl('', [
         (control: AbstractControl) => {
@@ -248,24 +247,23 @@ export class ServerPostComponent implements OnInit {
     }
     if (verMax && verMin) {
       if (verMax === verMin) {
-        this.currentVersion = verMax.toLowerCase();
+        this.currentVersion = verMax.toUpperCase();
       } else {
         const maxMain = verMax.lastIndexOf('.') === verMax.indexOf('.') ? verMax : verMax.substring(0, verMax.lastIndexOf('.'));
         const minMain = verMin.lastIndexOf('.') === verMin.indexOf('.') ? verMin : verMin.substring(0, verMin.lastIndexOf('.'));
         if (maxMain === minMain) {
-          this.currentVersion = maxMain + '.x';
+          this.currentVersion = maxMain + '.X';
         } else {
-          this.currentVersion = (verMin + '-' + verMax).toLowerCase();
+          this.currentVersion = (verMin + '-' + verMax).toUpperCase();
         }
       }
     } else {
       if (verMax || verMin) {
-        this.currentVersion = verMax ? verMax.toLowerCase() : verMin.toLowerCase();
+        this.currentVersion = verMax ? verMax.toUpperCase() : verMin.toUpperCase();
       } else {
         this.currentVersion = null;
       }
     }
-    console.log(this.currentVersion);
   }
 
 }

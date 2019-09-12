@@ -9,8 +9,14 @@ export class AppComponent {
   readonly title = 'MCBBS Utils';
   readonly navList = [
     {
+      name: '首页',
+      path: '/'
+    },
+    {
       name: '服务器帖验证',
       path: '/post-validation/server'
     }
+  ];
+  readonly friendLink = [
   ];
 }
