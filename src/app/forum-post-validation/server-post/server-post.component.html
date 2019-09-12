@@ -11,7 +11,7 @@
         <mat-list class="notice-list">
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>该验证工具基于<strong>2019年3月6日</strong>版本的版规制作。</span>
+            <span>该验证工具基于<strong>2019年9月5日</strong>版本的版规制作。</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
@@ -19,28 +19,28 @@
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>为了大家养成仔细阅读版规的良好习惯，本工具将只给出违反版规的原因，而不会给出解决方案，请仔细阅读版规后再做出修改！</span>
+            <span>为了大家养成仔细阅读版规的良好习惯，本工具将只给出违反的版规编号(版规编号来自<a mat-button color="primary" href="https://www.mcbbs.net/thread-405836-1-1.html">服务器版版规</a>)，而不会给出解决方案，请仔细阅读版规后再做出修改！</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>目前支持(或部分支持)检测的版规有：1-2、3-1、3-2、3-3(仅检测字数)、3-4、3-5、3-6、3-7、3-9-1。</span>
+            <span>目前支持(或部分支持)检测的版规有：1-2(不支持“其它版本”的版本号合法性)、3-1、3-2、3-3(不支持抄袭检测)、3-4、3-5(亮色检测目前为实验性功能，可能出现判断错误)、3-6、3-7-1、3-9-1。</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>除了必填以外没有其它版规要求的宣传帖信息，以及程序难以检测(如不同背景下的瞎眼亮色)的版规，暂不提供检测。</span>
+            <span>对帖子内容有要求的版规都在第三大点(标题在第一大点)，所以本工具已经几乎涵盖全部了。但仍请仔细阅读其它版规，避免因违规导致浪费绿宝石！</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>部分检测项可能较为严格，如果您经过<strong>再三确认</strong>后仍然认为自己没有违反版规，可无视违规提示。</span>
+            <span>除了必填以外没有其它版规要求的宣传帖信息不提供检测。</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListIcon>chevron_right</mat-icon>
+            <span>部分检测项可能较为严格，如果您经过<strong>再三确认版规并仔细核对帖子内容</strong>后仍然认为自己没有违反版规，可无视违规提示。</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
             <span>如果有违反版规的内容但本工具未检测出的，或希望能添加检测的，欢迎在
               <a mat-button color="accent" href="http://www.mcbbs.net/thread-682152-1-1.html">此处</a>提交。</span>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>作者保留所有权利。</span>
           </mat-list-item>
         </mat-list>
       </mat-expansion-panel>
@@ -70,7 +70,7 @@
       <label>服务器版本</label>
       <div class="server-version-select">
         <mat-checkbox
-          *ngFor="let v of ['1.13.2','1.13.1','1.13','1.12.2','1.12.1','1.12','1.11.2','1.11','1.10.X','1.9.4','1.9','1.8.X','1.7.10','1.7.2','1.6.4']; let i = index;"
+          *ngFor="let v of ['1.14.4','1.14','1.13.2','1.13.1','1.13','1.12.2','1.12.1','1.12','1.11.2','1.11','1.10.X','1.9.4','1.9','1.8.X','1.7.10','1.7.2','1.6.4']; let i = index;"
           (change)="server.version[v] = $event.checked ? -i - 1 : false; resetCurrentVersion(); form.get('title').updateValueAndValidity();"
           formControlName="serverVersion">{{ v }}</mat-checkbox>
         <mat-checkbox

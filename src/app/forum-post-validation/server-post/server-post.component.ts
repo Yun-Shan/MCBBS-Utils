@@ -102,6 +102,9 @@ export class ServerPostComponent implements OnInit {
             if (text.length <= 100) {
               errs['3-3'] = '宣传帖内容必须在100字以上';
             }
+            if (!$('img', $preview).length) {
+              errs['*3-3'] = '建议使用游戏截图介绍服务器';
+            }
 
             const $colors = $('font[color]', $preview);
             $colors.each(function() {
@@ -132,7 +135,11 @@ export class ServerPostComponent implements OnInit {
               // @ts-ignore
               return this.size > 5;
             }).length) {
-              errs[errs['3-5'] ? '3-5(1)' : '3-5'] = '只允许使用5号及5号以下的字号';
+              if (errs['3-5']) {
+                errs['3-5'] += '；只允许使用5号及5号以下的字号';
+              } else {
+                errs['3-5'] = '只允许使用5号及5号以下的字号';
+              }
             }
 
             const AUTO_AUDIO_REGEX = /\[(?<type>audio|flash)].+\?.*auto=1.*\Q[/\E\k<type>]/i;
@@ -143,7 +150,7 @@ export class ServerPostComponent implements OnInit {
               errs['3-6'] = '帖内禁止出现会自动播放的音乐';
             }
             if (TOP_WORD_REGEX.test(text)) {
-              errs['3-7'] = '禁止在宣传贴内使用国家级、最高级、第一家等用语';
+              errs['3-7-7'] = '禁止在宣传贴内使用国家级、最高级、第一家等用语';
             }
             if (server.welfare) {
               const WelfareDeclare = '本服是公益服并且愿意承担虚假宣传的一切后果';
