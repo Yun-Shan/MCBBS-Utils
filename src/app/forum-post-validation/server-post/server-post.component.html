@@ -105,7 +105,7 @@
       <mat-form-field
         [style.padding-bottom]="isInvalid('serverType') ? keysCount(form.get('serverType').errors) * 13 + 'px' : 0">
         <mat-label>服务器类型</mat-label>
-        <mat-select (selectionChange)="(server.specialClient = undefined) || (form.get('content').updateValueAndValidity())" formControlName="serverType" required>
+        <mat-select (selectionChange)="server.specialClient = undefined" formControlName="serverType" required>
           <mat-option>请选择</mat-option>
           <mat-option value="mod">Mod服务器</mat-option>
           <mat-option value="vanilla">纯净服务器</mat-option>

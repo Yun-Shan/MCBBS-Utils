@@ -182,8 +182,7 @@ export class ServerPostComponent implements OnInit {
                 errs['3-4'] = '公益服需在帖子最顶部以正确格式标注公益声明';
               }
             } else {
-              if (server.serverType !== 'vanilla' && POKEMON_REGEX.test(text)) {
-                console.log(server.serverType);
+              if (POKEMON_REGEX.test(text)) {
                 errs['3-9-1'] = '以Pixelmon Mod为服务器玩法的仅允许成为公益服';
               }
             }
