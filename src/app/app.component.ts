@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LogUpdateService } from './log-update.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   readonly title = 'MCBBS Utils';
   readonly navList = [
     {
@@ -17,6 +18,13 @@ export class AppComponent {
       path: '/post-validation/server'
     }
   ];
-  readonly friendLink = [
-  ];
+  readonly friendLink = [];
+  year: number;
+
+  constructor(public logUpdate: LogUpdateService) {
+  }
+
+  ngOnInit(): void {
+    this.year = new Date().getFullYear();
+  }
 }

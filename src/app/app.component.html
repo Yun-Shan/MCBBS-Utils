@@ -6,6 +6,7 @@
       <nav>
         <button mat-button routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>
       </nav>
+      <button mat-raised-button color="warn" *ngIf="logUpdate.update">已下载最新版本，请手动刷新页面更新！</button>
       <span class="flex-space"></span>
       <ng-container *ngIf="friendLink && friendLink.length > 0">
         <span class="friend-link-title">友情链接</span>
@@ -18,7 +19,7 @@
   </main>
   <footer>
     <div class="copyright">
-      Copyright © 2017 - 2019 xingyunhm.com 版权所有
+      Copyright © 2017 - {{ year }} xingyunhm.com 版权所有
     </div>
   </footer>
 </div>
