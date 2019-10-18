@@ -142,7 +142,7 @@ export class ServerPostComponent implements OnInit {
 
             const AUTO_AUDIO_REGEX = /\[(?<type>audio|flash)].+\?.*auto=1.*\Q[/\E\k<type>]/i;
             const TOP_WORD_REGEX = /(国家级)|(国内(最|前|唯一|少数))|(最高级)|(第一家)|(唯一一([家个]))|((最|第一|唯一).{1,15}服)|(服.{1,15}(最|第一|唯一))/;
-            const POKEMON_REGEX = /(宝可梦)|(精灵宝可梦)|(口袋((妖怪)|(怪兽)|(怪物))|(宠物小精灵)|(袋魔)|(ポケットモンスター)|(ポケモン)|(Pokemon)|(Pokémon))/g;
+            const POKEMON_REGEX = /(宝可梦)|(精灵宝可梦)|(口袋((妖怪)|(怪兽)|(怪物)))|(宠物小精灵)|(袋魔)|(ポケットモンスター)|(ポケモン)|(Pokemon)|(Pokémon)|(精灵球)|(皮卡丘)/g;
 
             if (AUTO_AUDIO_REGEX.test(control.value)) {
               errs['3-6'] = '帖内禁止出现会自动播放的音乐';
@@ -182,7 +182,8 @@ export class ServerPostComponent implements OnInit {
                 errs['3-4'] = '公益服需在帖子最顶部以正确格式标注公益声明';
               }
             } else {
-              if (POKEMON_REGEX.test(text)) {
+              if (server.serverType !== 'vanilla' && POKEMON_REGEX.test(text)) {
+                console.log(server.serverType);
                 errs['3-9-1'] = '以Pixelmon Mod为服务器玩法的仅允许成为公益服';
               }
             }

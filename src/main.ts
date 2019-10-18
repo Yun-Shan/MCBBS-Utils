@@ -7,6 +7,9 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
+declare var window: any;
+
+window.$ = window.jQuery;
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
