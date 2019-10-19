@@ -11,7 +11,7 @@
         <mat-list class="notice-list">
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
-            <span>该验证工具基于<strong>2019年9月5日</strong>版本的版规制作。</span>
+            <span>该验证工具基于<strong>2019年10月15日</strong>版本的版规制作。</span>
           </mat-list-item>
           <mat-list-item>
             <mat-icon matListIcon>chevron_right</mat-icon>
@@ -70,7 +70,7 @@
       <label>服务器版本</label>
       <div class="server-version-select">
         <mat-checkbox
-          *ngFor="let v of ['1.14.4','1.14','1.13.2','1.13.1','1.13','1.12.2','1.12.1','1.12','1.11.2','1.11','1.10.X','1.9.4','1.9','1.8.X','1.7.10','1.7.2','1.6.4']; let i = index;"
+          *ngFor="let v of versionList; let i = index;"
           (change)="server.version[v] = $event.checked ? -i - 1 : false; resetCurrentVersion(); form.get('title').updateValueAndValidity();"
           formControlName="serverVersion">{{ v }}</mat-checkbox>
         <mat-checkbox
@@ -105,7 +105,7 @@
       <mat-form-field
         [style.padding-bottom]="isInvalid('serverType') ? keysCount(form.get('serverType').errors) * 13 + 'px' : 0">
         <mat-label>服务器类型</mat-label>
-        <mat-select (selectionChange)="server.specialClient = undefined" formControlName="serverType" required>
+        <mat-select (selectionChange)="server.specialClient = undefined; form.get('content').updateValueAndValidity()" formControlName="serverType" required>
           <mat-option>请选择</mat-option>
           <mat-option value="mod">Mod服务器</mat-option>
           <mat-option value="vanilla">纯净服务器</mat-option>
@@ -167,7 +167,6 @@
         </ul>
       </mat-error>
     </mat-form-field>
-    <span class="flex-space"></span>
     <mat-form-field
       [style.padding-bottom]="isInvalid('content') ? keysCount(form.get('content').errors) * 13 + 'px' : 0">
       <textarea matInput placeholder="帖子内容" rows="7"

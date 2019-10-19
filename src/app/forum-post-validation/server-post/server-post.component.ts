@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Server } from './server';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+
 declare var $: any;
 declare var window: any;
 
@@ -12,9 +13,12 @@ declare var window: any;
 export class ServerPostComponent implements OnInit {
 
   noticeOpenState = true;
-  currentVersion: string;
+  currentVersion: string[];
   server: Server = new Server();
   form: FormGroup;
+
+  versionList = ['1.14.4', '1.14', '1.13.2', '1.13.1', '1.13', '1.12.2', '1.12.1', '1.12',
+    '1.11.2', '1.11', '1.10.X', '1.9.4', '1.9', '1.8.X', '1.7.10', '1.7.2', '1.6.4'];
 
   constructor() {
     const val = localStorage.getItem('noticePanelExpand');
@@ -33,17 +37,37 @@ export class ServerPostComponent implements OnInit {
           const res = regex.exec(control.value);
           if (res) {
             const errs = {};
-            let counter = 0;
+            let hasErr = false;
             if (!/(电信)|(联通)|(移动)|(双线)|(多线)|(教育)|(港澳)|(台湾)|(欧洲)|(美洲)|(亚太)|(内网)/.test(res.groups.network)) {
-              errs[`1-2(${++counter})`] = '网络类型错误';
+              hasErr = true;
+              this.addErrs(errs, '1-2', '网络类型错误');
             }
             if (this.server.name && this.server.name !== res.groups.name) {
-              errs[`1-2(${++counter})`] = '服务器名称必须与模板内服务器名称一致';
+              hasErr = true;
+              this.addErrs(errs, '1-2', '服务器名称必须与模板内服务器名称一致');
             }
-            if (this.currentVersion && this.currentVersion !== 'other' && this.currentVersion !== res.groups.version.toLowerCase()) {
-              errs[`1-2(${++counter})`] = '版本号要与模板中版本号完全符合';
+            if (this.currentVersion && this.currentVersion[0] !== 'other') {
+              if (this.currentVersion.indexOf(res.groups.version.toUpperCase()) === -1) {
+                hasErr = true;
+                this.addErrs(errs, '1-2', '版本号要与模板中版本号完全符合');
+              }
+              // 同时支持多个版本时确保中间版本都支持
+              const selectVersions = this.getSelectVersions();
+              if (selectVersions.length > 1) {
+                const verMin = this.versionList.indexOf(selectVersions[0]);
+                const verMax = this.versionList.indexOf(selectVersions[selectVersions.length - 1]);
+                // 注意：大版本号是在前面的，小版本号是在后面的，versionList的版本号是从大到小排序的
+                for (let i = verMax + 1; i < verMin; i++) {
+                  // 有中间版本号没选
+                  if (selectVersions.indexOf(this.versionList[i]) === -1) {
+                    hasErr = true;
+                    this.addErrs(errs, '1-2', '版本号要与模板中版本号完全符合');
+                    break;
+                  }
+                }
+              }
             }
-            if (counter > 0) {
+            if (hasErr) {
               return errs;
             }
           } else {
@@ -101,12 +125,12 @@ export class ServerPostComponent implements OnInit {
               errs['3-3'] = '宣传帖内容必须在100字以上';
             }
             if (!$('img', $preview).length) {
-              errs['*3-3'] = '※建议使用游戏截图介绍服务器';
+              errs['*3-3'] = '建议使用游戏截图介绍服务器';
             }
 
             const $colors = $('font[color]', $preview);
             $colors.each(function() {
-              if (errs['3-5']) {
+              if (errs['*3-5']) {
                 return;
               }
               document.body.appendChild(this);
@@ -124,7 +148,7 @@ export class ServerPostComponent implements OnInit {
               const dis = Math.sqrt((2 + rmean / 256) * (R ** 2) + 4 * (G ** 2) + (2 + (255 - rmean) / 256) * (B ** 2));
               console.log(dis);
               if (dis < 550) {
-                errs['*3-5'] = '※疑似有妨碍阅读的字体颜色，请仔细检查';
+                errs['*3-5'] = '疑似有妨碍阅读的字体颜色，请仔细检查';
               }
             });
 
@@ -133,11 +157,7 @@ export class ServerPostComponent implements OnInit {
               // @ts-ignore
               return this.size > 5;
             }).length) {
-              if (errs['3-5']) {
-                errs['3-5'] += '；只允许使用5号及5号以下的字号';
-              } else {
-                errs['3-5'] = '只允许使用5号及5号以下的字号';
-              }
+              errs['3-5'] = '只允许使用5号及5号以下的字号';
             }
 
             const AUTO_AUDIO_REGEX = /\[(?<type>audio|flash)].+\?.*auto=1.*\Q[/\E\k<type>]/i;
@@ -181,9 +201,13 @@ export class ServerPostComponent implements OnInit {
               if (invalid) {
                 errs['3-4'] = '公益服需在帖子最顶部以正确格式标注公益声明';
               }
-            } else {
-              if (POKEMON_REGEX.test(text)) {
+            }
+            if (POKEMON_REGEX.test(text)) {
+              if (!server.welfare) {
                 errs['3-9-1'] = '以Pixelmon Mod为服务器玩法的仅允许成为公益服';
+              }
+              if (server.serverType !== 'mod') {
+                errs['3-9-2'] = 'Pokémon元素仅允许使用原版Pixelmon MOD(1.12及以上版本为Pixelmon Reforged MOD)';
               }
             }
             if (Object.keys(errs).length > 0) {
@@ -202,14 +226,6 @@ export class ServerPostComponent implements OnInit {
     }
   }
 
-  test() {
-    console.log(this.server);
-  }
-
-  log(obj: any) {
-    console.log(obj);
-  }
-
   noticePanelToggle() {
     localStorage.setItem('noticePanelExpand', String(this.noticeOpenState));
   }
@@ -225,44 +241,94 @@ export class ServerPostComponent implements OnInit {
 
   resetCurrentVersion() {
     if (this.server.version.other) {
-      this.currentVersion = 'other';
+      this.currentVersion = ['other'];
       return;
     }
     let verMax = null;
     let verMaxNum = 0;
     let verMin = null;
     let verMinNum = 99999;
-    for (const v of Object.keys(this.server.version)) {
-      const val = this.server.version[v];
-      if (val) {
-        if (!verMaxNum || val > verMaxNum) {
-          verMax = v;
-          verMaxNum = val;
-        }
-        if (!verMinNum || val < verMinNum) {
-          verMin = v;
-          verMinNum = val;
-        }
+    const selectVersions = this.getSelectVersions();
+    selectVersions.forEach((ver, idx, arr) => {
+      // 版本号的数值编号 用于方便判断
+      const numVer = this.server.version[ver];
+      if (!verMaxNum || numVer > verMaxNum) {
+        verMax = ver;
+        verMaxNum = numVer;
       }
-    }
+      if (!verMinNum || numVer < verMinNum) {
+        verMin = ver;
+        verMinNum = numVer;
+      }
+    });
     if (verMax && verMin) {
       if (verMax === verMin) {
         this.currentVersion = verMax.toUpperCase();
       } else {
+        // 最大版本的主版本号
         const maxMain = verMax.lastIndexOf('.') === verMax.indexOf('.') ? verMax : verMax.substring(0, verMax.lastIndexOf('.'));
+        // 最小版本的主版本号
         const minMain = verMin.lastIndexOf('.') === verMin.indexOf('.') ? verMin : verMin.substring(0, verMin.lastIndexOf('.'));
         if (maxMain === minMain) {
-          this.currentVersion = maxMain + '.X';
+          this.currentVersion = [maxMain + '.X'];
         } else {
-          this.currentVersion = (verMin + '-' + verMax).toUpperCase();
+          this.currentVersion = [(verMin + '-' + verMax).toUpperCase()];
+          let minCounter = 0;
+          for (const ver of selectVersions) {
+            if (ver.indexOf(minMain) === 0) {
+              minCounter++;
+            } else {
+              break;
+            }
+          }
+          if (minCounter > 1) {
+            this.currentVersion.push((minMain + '.X-' + verMax).toUpperCase());
+          }
+          // 从后往前遍历判断主版本号
+          let maxCounter = 0;
+          for (let i = selectVersions.length - 1; i >= 0; i--) {
+            if (selectVersions[i].indexOf(maxMain) === 0) {
+              maxCounter++;
+            } else {
+              break;
+            }
+          }
+          if (maxCounter > 1) {
+            this.currentVersion.push((verMin + '-' + maxMain + '.X').toUpperCase());
+          }
+          // 最大最小的主版本号都支持多个小版本
+          if (minCounter > 1 && maxCounter > 1) {
+            this.currentVersion.push((minMain + '.X-' + maxMain + '.X').toUpperCase());
+          }
         }
       }
     } else {
       if (verMax || verMin) {
-        this.currentVersion = verMax ? verMax.toUpperCase() : verMin.toUpperCase();
+        this.currentVersion = [verMax ? verMax.toUpperCase() : verMin.toUpperCase()];
       } else {
         this.currentVersion = null;
       }
+    }
+  }
+
+  // 获取已选择的版本号，自动从小到大排序
+  getSelectVersions() {
+    const selectVersions = Object.keys(this.server.version)
+      .filter((e, idx, arr) => {
+        return e !== 'other' && this.server.version[e];
+      });
+    // 版本号从小到大排序，前提是versionList是严格从大到小排序的
+    selectVersions.sort((a, b) => {
+      return this.versionList.indexOf(b) - this.versionList.indexOf(a);
+    });
+    return selectVersions;
+  }
+
+  addErrs(errs, key, val) {
+    if (errs[key]) {
+      errs[key] += '；' + val;
+    } else {
+      errs[key] = val;
     }
   }
 
