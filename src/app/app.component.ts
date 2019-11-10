@@ -16,6 +16,10 @@ export class AppComponent implements OnInit {
     {
       name: '服务器帖验证',
       path: '/post-validation/server'
+    },
+    {
+      name: '机器人自动化验证',
+      path: '/validation-robot/server'
     }
   ];
   readonly friendLink = [];
