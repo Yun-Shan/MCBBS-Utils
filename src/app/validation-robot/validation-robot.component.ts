@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
@@ -6,8 +6,8 @@ import 'echarts/lib/chart/pie';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
-import { Observable, Subject } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-validation-robot',
@@ -95,7 +95,7 @@ export class ValidationRobotComponent implements AfterViewInit {
         animationType: 'scale',
         animationEasing: 'elasticOut',
         animationDelay(idx) {
-          return Math.random() * 200;
+          return Math.abs(Math.random() * 210 - idx);
         }
       }
     ]
@@ -105,7 +105,9 @@ export class ValidationRobotComponent implements AfterViewInit {
   constructor(private http: HttpClient) {
     this.http.get(`/api/data/threads.json?r=${Math.random()}`).subscribe(
       (res: any) => {
-        this.data = res.data.sort((a, b) => Date.parse(a.edit_time) - Date.parse(b.edit_time));
+        this.data = res.data
+          // 按编辑时间倒序
+          .sort((a, b) => Date.parse(b.edit_time) - Date.parse(a.edit_time));
         this.loading = false;
         this.success = true;
       },
@@ -128,9 +130,9 @@ export class ValidationRobotComponent implements AfterViewInit {
       (res: any) => {
         const data = [
           /* tslint:disable:no-string-literal */
-          {value: res.data[0]['检查通过且和版主审核结果一致'] + res.data[0]['检查不通过且和版主审核结果一致'], name: '与版主一致'},
-          {value: res.data[0]['检查通过但版主审核不通过'], name: '检测通过但版主审核不通过'},
-          {value: res.data[0]['检查不通过但版主审核通过'], name: '检测不通过但版主审核通过'},
+          {value: res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致'], name: '与版主一致'},
+          {value: res.data['检查通过但版主审核不通过'], name: '检测通过但版主审核不通过'},
+          {value: res.data['检查不通过但版主审核通过'], name: '检测不通过但版主审核通过'},
         ];
         charts.setOption({
           title: {
@@ -156,7 +158,7 @@ export class ValidationRobotComponent implements AfterViewInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_) {
     this.resizeEvent.next('0');
   }
 
