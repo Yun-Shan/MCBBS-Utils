@@ -6,7 +6,10 @@
 
   margin: 2% 18%;
   @media (max-width: 999px) {
-    margin: 2% 14%;
+    margin: 2% 13%;
+  }
+  @media (max-width: 600px) {
+    margin: 2% 3%;
   }
 }
 
@@ -49,8 +52,8 @@ th[mat-header-cell],td[mat-cell] {
 
 /* Column Widths */
 .mat-column-tid {
-  width: 127px;
-  max-width: 177px;
+  width: 77px;
+  max-width: 127px;
 }
 .mat-column-edit_time {
   width: 177px;

@@ -1,7 +1,7 @@
 <div class="wrapper">
   <header>
     <mat-toolbar color="primary">
-      <span>{{ title }}</span>
+      <span class="brand">{{ title }}</span>
       <span class="brand-spacer"></span>
       <nav>
         <button mat-button routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>

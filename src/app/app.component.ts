@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       path: '/post-validation/server'
     },
     {
-      name: '机器人自动化验证',
+      name: '自动化验证',
       path: '/validation-robot/server'
     }
   ];
