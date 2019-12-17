@@ -20,6 +20,7 @@ export class ValidationRobotComponent implements AfterViewInit {
   loading = true;
   fail = false;
   success = false;
+  updateTime: string;
 
   readonly displayedColumns = ['tid', 'edit_time', 'check_result'];
   private readonly option = {
@@ -69,8 +70,8 @@ export class ValidationRobotComponent implements AfterViewInit {
               color: 'rgba(7, 7, 7, 0.7)'
             },
             smooth: 0.2,
-            length: 20,
-            length2: 40
+            length: 15,
+            length2: 35
           }
         },
         itemStyle: {
@@ -101,10 +102,12 @@ export class ValidationRobotComponent implements AfterViewInit {
     ]
   };
   private readonly resizeEvent = new Subject();
+  resultErrors: any;
 
   constructor(private http: HttpClient) {
     this.http.get(`/api/data/threads.json?r=${Math.random()}`).subscribe(
       (res: any) => {
+        this.updateTime = res['update-time'];
         this.data = res.data
           // 按编辑时间倒序
           .sort((a, b) => Date.parse(b.edit_time) - Date.parse(a.edit_time));
@@ -140,6 +143,7 @@ export class ValidationRobotComponent implements AfterViewInit {
           },
           series: [{data}]
         });
+        this.resultErrors = res.errs;
       },
       error => {
         charts.setOption({

@@ -3,16 +3,6 @@
     <mat-card-title>
     </mat-card-title>
     <mat-card-content>
-      <div style="width: 100%; height: 400px;" id="my-chart"></div>
-    </mat-card-content>
-    <mat-card-footer>
-      <span>仅已被检测且已被版主审核的帖子计入统计</span>
-    </mat-card-footer>
-  </mat-card>
-  <mat-card class="main-card">
-    <mat-card-title>
-    </mat-card-title>
-    <mat-card-content>
       <div *ngIf="success; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>
         <table mat-table [dataSource]="data" class="mat-elevation-z8">
@@ -56,7 +46,28 @@
       </ng-template>
     </mat-card-content>
     <mat-card-footer>
-      <span *ngIf="data">{{data.length}}个帖子已检测并等待版主审核，</span><span>每隔6小时扫描一次审核版进行检测，试运行期间将显示违规原因</span>
+      <div>
+        <span *ngIf="data">{{data.length}}个帖子已检测并等待版主审核(移出审核版才视为审核完毕)，</span><span>每隔6小时扫描一次审核版进行检测，试运行期间将显示违规原因。</span>
+      </div>
+      <div *ngIf="data">
+        <span>上一次数据更新于{{ updateTime }}</span>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+  <mat-card class="main-card">
+    <mat-card-title>
+    </mat-card-title>
+    <mat-card-content>
+      <div style="width: 100%; height: 400px;" id="my-chart"></div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div *ngIf="resultErrors && resultErrors.length">
+        <div>检测结果与版主审核不一致列表</div>
+        <ul>
+          <li style="text-align: left" *ngFor="let it of resultErrors">{{ it['tid'] }}： {{ it['reason'] }}</li>
+        </ul>
+      </div>
+      <span>仅已被检测且已被版主审核的帖子计入统计(什么时候正确率95+%我就满足了，但是我卡在85%上不去了啊啊啊啊)</span>
     </mat-card-footer>
   </mat-card>
 </div>
