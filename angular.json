@@ -145,5 +145,8 @@
       }
     }
   },
-  "defaultProject": "MCBBS-Utils"
+  "defaultProject": "MCBBS-Utils",
+  "cli": {
+    "analytics": "95772a8a-8adb-44d6-8479-eaf99b872076"
+  }
 }
