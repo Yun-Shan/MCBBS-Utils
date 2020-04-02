@@ -36,7 +36,7 @@ table {
   width: 100%;
 }
 
-th[mat-header-cell],td[mat-cell] {
+th[mat-header-cell], td[mat-cell] {
   text-align: center;
 }
 
@@ -52,11 +52,18 @@ th[mat-header-cell],td[mat-cell] {
   color: indianred;
 }
 
+.check-fail {
+  align-items: center;
+  display: flex;
+  justify-content: left;
+}
+
 /* Column Widths */
 .mat-column-tid {
   width: 77px;
   max-width: 127px;
 }
+
 .mat-column-edit_time {
   width: 177px;
   max-width: 227px;

@@ -3,6 +3,22 @@
     <mat-card-title>
     </mat-card-title>
     <mat-card-content>
+      <div style="width: 100%; height: 400px;" id="my-chart"></div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div *ngIf="resultErrors && resultErrors.length">
+        <div>检测结果与版主审核不一致列表</div>
+        <ul>
+          <li style="text-align: left" *ngFor="let it of resultErrors">{{ it['tid'] }}： {{ it['reason'] }}</li>
+        </ul>
+      </div>
+      <span>仅已被检测且已被版主审核的帖子计入统计(什么时候正确率95+%我就满足了，但是我卡在85%上不去了啊啊啊啊)</span>
+    </mat-card-footer>
+  </mat-card>
+  <mat-card class="main-card">
+    <mat-card-title>
+    </mat-card-title>
+    <mat-card-content>
       <div *ngIf="success; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>
         <table mat-table [dataSource]="data" class="mat-elevation-z8">
@@ -24,8 +40,9 @@
             <td mat-cell *matCellDef="let element">
               <div *ngIf="element['check_result']; then checkFail else checkSuccess"></div>
               <ng-template #checkFail>
-                <div [matTooltip]="resolveResult(element['check_result'])">
+                <div class="check-fail">
                   <mat-icon class="check-icon check-icon-fail">cancel</mat-icon>
+                  {{element['check_result']}}
                 </div>
               </ng-template>
               <ng-template #checkSuccess>
@@ -52,22 +69,6 @@
       <div *ngIf="data">
         <span>上一次数据更新于{{ updateTime }}</span>
       </div>
-    </mat-card-footer>
-  </mat-card>
-  <mat-card class="main-card">
-    <mat-card-title>
-    </mat-card-title>
-    <mat-card-content>
-      <div style="width: 100%; height: 400px;" id="my-chart"></div>
-    </mat-card-content>
-    <mat-card-footer>
-      <div *ngIf="resultErrors && resultErrors.length">
-        <div>检测结果与版主审核不一致列表</div>
-        <ul>
-          <li style="text-align: left" *ngFor="let it of resultErrors">{{ it['tid'] }}： {{ it['reason'] }}</li>
-        </ul>
-      </div>
-      <span>仅已被检测且已被版主审核的帖子计入统计(什么时候正确率95+%我就满足了，但是我卡在85%上不去了啊啊啊啊)</span>
     </mat-card-footer>
   </mat-card>
 </div>

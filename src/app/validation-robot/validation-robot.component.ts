@@ -78,8 +78,10 @@ export class ValidationRobotComponent implements AfterViewInit {
           normal: {
             color: (params) => {
               switch (params.name) {
-                case '与版主一致':
+                case '检测通过且与版主一致':
                   return 'forestgreen';
+                case '检测不通过且与版主一致':
+                  return 'green';
                 case '检测通过但版主审核不通过':
                   return 'red';
                 case '检测不通过但版主审核通过':
@@ -109,8 +111,16 @@ export class ValidationRobotComponent implements AfterViewInit {
       (res: any) => {
         this.updateTime = res['update-time'];
         this.data = res.data
-          // 按编辑时间倒序
-          .sort((a, b) => Date.parse(b.edit_time) - Date.parse(a.edit_time));
+          .sort((a, b) => {
+            // 有错误的排前面
+            if (a.check_result && !b.check_result) {
+              return -1;
+            } else if (!a.check_result && b.check_result) {
+              return 1;
+            }
+            // 按编辑时间倒序
+            return Date.parse(b.edit_time) - Date.parse(a.edit_time);
+          });
         this.loading = false;
         this.success = true;
       },
@@ -133,13 +143,14 @@ export class ValidationRobotComponent implements AfterViewInit {
       (res: any) => {
         const data = [
           /* tslint:disable:no-string-literal */
-          {value: res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致'], name: '与版主一致'},
+          {value: res.data['检查通过且和版主审核结果一致'], name: '检测通过且与版主一致'},
+          {value: res.data['检查不通过且和版主审核结果一致'], name: '检测不通过且与版主一致'},
           {value: res.data['检查通过但版主审核不通过'], name: '检测通过但版主审核不通过'},
           {value: res.data['检查不通过但版主审核通过'], name: '检测不通过但版主审核通过'},
         ];
         charts.setOption({
           title: {
-            text: '检测结果'
+            text: `检测结果 - 已检测${res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致'] + res.data['检查通过但版主审核不通过'] + res.data['检查不通过但版主审核通过']}个帖子`
           },
           series: [{data}]
         });
