@@ -150,7 +150,8 @@ export class ValidationRobotComponent implements AfterViewInit {
         ];
         charts.setOption({
           title: {
-            text: `检测结果 - 已检测${res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致'] + res.data['检查通过但版主审核不通过'] + res.data['检查不通过但版主审核通过']}个帖子`
+            text: `检测结果 - 已检测${res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致']
+            + res.data['检查通过但版主审核不通过'] + res.data['检查不通过但版主审核通过']}个帖子`
           },
           series: [{data}]
         });
