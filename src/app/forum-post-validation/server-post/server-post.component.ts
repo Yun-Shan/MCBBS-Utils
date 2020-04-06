@@ -160,7 +160,9 @@ export class ServerPostComponent implements OnInit {
               errs['3-5'] = '只允许使用5号及5号以下的字号';
             }
 
-            const AUTO_AUDIO_REGEX = /\[(?<type>audio|flash)].+\?.*auto=1.*\Q[/\E\k<type>]/i;
+            // TODO 不知道为啥有反向引用就报错
+            // const AUTO_AUDIO_REGEX = /\[(?<type>audio|flash)].+\?.*auto=1.*\Q[/\E\k<type>]/i;
+            const AUTO_AUDIO_REGEX = /\[(audio|flash)].+\?.*auto=1.*\Q[/\E(audio|flash)]/i;
             const TOP_WORD_REGEX = /(国家级)|(国内(最|前|唯一|少数))|(最高级)|(第一家)|(唯一一([家个]))|((最|第一|唯一).{1,15}服)|(服.{1,15}(最|第一|唯一))/;
             const POKEMON_REGEX = /(宝可梦)|(精灵宝可梦)|(口袋((妖怪)|(怪兽)|(怪物)))|(宠物小精灵)|(袋魔)|(ポケットモンスター)|(ポケモン)|(Pokemon)|(Pokémon)|(精灵球)|(皮卡丘)/g;
 

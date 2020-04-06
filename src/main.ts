@@ -11,5 +11,7 @@ declare var window: any;
 
 window.$ = window.jQuery;
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+});
