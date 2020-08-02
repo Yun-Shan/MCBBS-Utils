@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ValidationRobotComponent } from './validation-robot/validation-robot.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -18,12 +18,12 @@ import { RouterModule } from '@angular/router';
     ValidationRobotComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     SharedModule,
+    UserModule,
     ForumPostValidationModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    RouterModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,21 +8,26 @@
       </nav>
       <button mat-raised-button color="warn" *ngIf="logUpdate.update">已下载最新版本，请手动刷新页面更新！</button>
       <span class="flex-space"></span>
-      <ng-container *ngIf="friendLink && friendLink.length > 0">
-        <span class="friend-link-title">友情链接</span>
-        <a mat-stroked-button href="{{ it.path }}" *ngFor="let it of friendLink">{{ it.name }}</a>
-      </ng-container>
     </mat-toolbar>
   </header>
   <main>
     <router-outlet></router-outlet>
   </main>
   <footer>
-    <div class="feedback">
-      想要支持作者或提交反馈可以<a mat-stroked-button color="primary" href="https://www.mcbbs.net/thread-682152-1-1.html" target="_blank">点击此处</a>ヾ(ｏ･ω･)ﾉ
+    <div class="footer-left">
+      <div class="friend-link">
+        <span>友情链接</span>
+        <br/>
+        <a mat-stroked-button *ngFor="let it of friendLink" target="_blank" href="{{ it.path }}">{{ it.name }}</a>
+      </div>
     </div>
-    <div class="copyright">
-      Copyright © 2017 - {{ year }} xingyunhm.com 版权所有
+    <div class="footer-right">
+      <div class="feedback">
+        想要支持作者或提交反馈可以<a mat-stroked-button color="primary" href="https://www.mcbbs.net/thread-682152-1-1.html" target="_blank">点击此处</a>ヾ(ｏ･ω･)ﾉ
+      </div>
+      <div class="copyright">
+        Copyright © 2017 - {{ year }} xingyunhm.com 版权所有
+      </div>
     </div>
   </footer>
 </div>

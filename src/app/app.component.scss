@@ -29,11 +29,6 @@ header {
     [mat-stroked-button],[mat-button] {
       margin: 0 5px;
     }
-
-    .friend-link-title {
-      font-size: 17px;
-      margin: 0 5px;
-    }
   }
 }
 
@@ -47,10 +42,27 @@ main {
 
 footer {
   position: relative;
-  height: 80px;
+  height: 90px;
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: left;
+  background-color: #E9E9E9;
+}
+
+.footer-right {
+  flex-grow: 1;
+  width: 50%;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+}
+
+.footer-left {
+  flex-grow: 1;
+  width: 50%;
+  flex-direction: column;
+}
+
+.friend-link {
+  margin-left: 50px;
 }
 

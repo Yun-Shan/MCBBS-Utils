@@ -48,12 +48,14 @@ th[mat-header-cell], td[mat-cell] {
   color: forestgreen;
 }
 
-.check-icon-warning {
-  color: darkorange;
-}
-
 .check-icon-fail {
   color: indianred;
+}
+
+.check-fail {
+  align-items: center;
+  display: flex;
+  justify-content: left;
 }
 
 /* Column Widths */

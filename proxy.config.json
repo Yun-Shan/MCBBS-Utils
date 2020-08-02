@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://utils.xingyunhm.com",
+    "target": "https://utils.xingyunhm.com",
     "secure": false,
     "pathRewrite": {},
     "changeOrigin": true,

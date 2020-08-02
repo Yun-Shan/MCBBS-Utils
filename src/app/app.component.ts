@@ -20,9 +20,14 @@ export class AppComponent implements OnInit {
     {
       name: '自动化验证',
       path: '/validation-robot/server'
+    },
+    {
+      name: '用户信息',
+      path: '/user'
     }
   ];
-  readonly friendLink = [];
+  readonly friendLink = [
+  ];
   year: number;
 
   constructor(public logUpdate: LogUpdateService) {

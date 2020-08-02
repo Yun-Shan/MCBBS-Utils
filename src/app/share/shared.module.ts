@@ -5,6 +5,7 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from '../user/user.service';
 
 @NgModule({
   imports: [
@@ -25,7 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  declarations: []
+  declarations: [],
+  providers: [
+    UserService
+  ]
 })
 export class SharedModule {
 }

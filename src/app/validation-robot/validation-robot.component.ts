@@ -112,11 +112,10 @@ export class ValidationRobotComponent implements AfterViewInit {
         this.updateTime = res['update-time'];
         this.data = res.data
           .sort((a, b) => {
-            // 有错误的排前面
-            if (a.check_result && !b.check_result) {
-              return -1;
-            } else if (!a.check_result && b.check_result) {
-              return 1;
+            // 基础排序：错误>警告>正确
+            const val = b.check_result - a.check_result;
+            if (val !== 0) {
+              return val;
             }
             // 按编辑时间倒序
             return Date.parse(b.edit_time) - Date.parse(a.edit_time);
