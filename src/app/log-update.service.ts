@@ -16,8 +16,7 @@ export class LogUpdateService {
       this.update = true;
       snackBar.open('新版本下载完毕，是否立即更新', '更新', {
         duration: 7777
-      }).onAction().subscribe(res => {
-        console.log(res);
+      }).onAction().subscribe(() => {
         location.reload();
       });
     });

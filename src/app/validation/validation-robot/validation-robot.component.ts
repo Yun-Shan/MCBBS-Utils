@@ -18,11 +18,13 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 })
 export class ValidationRobotComponent implements AfterViewInit {
 
-  data: any;
   loading = true;
   fail = false;
-  success = false;
+  loadSuccess = false;
   updateTime: string;
+
+  data: any[];
+  dataSuccess: any[];
 
   readonly displayedColumns = ['tid', 'edit_time', 'check_result'];
   readonly displayedColumnsSmall = ['tid', 'check_result'];
@@ -123,7 +125,18 @@ export class ValidationRobotComponent implements AfterViewInit {
     this.validationService.getThreads().then(
       res => {
         this.updateTime = res['update-time'];
-        this.data = res.data
+        const tmpData = res.data;
+        const successList = [];
+        for (const key in tmpData) {
+          if (tmpData.hasOwnProperty(key)) {
+            if (tmpData[key].check_result === 0) {
+              successList.push(tmpData[key]);
+            }
+          }
+        }
+        this.dataSuccess = successList;
+        this.data = tmpData
+          .filter(e => e.check_result !== 0)
           .sort((a, b) => {
             // 基础排序：错误>警告>正确
             const val = b.check_result - a.check_result;
@@ -134,7 +147,7 @@ export class ValidationRobotComponent implements AfterViewInit {
             return Date.parse(b.edit_time) - Date.parse(a.edit_time);
           });
         this.loading = false;
-        this.success = true;
+        this.loadSuccess = true;
       },
       error => {
         this.loading = false;

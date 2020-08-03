@@ -16,7 +16,7 @@
     </mat-card-footer>
   </mat-card>
   <div>
-    <div *ngIf="success; then thenBlock else elseBlock"></div>
+    <div *ngIf="loadSuccess; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <table mat-table [dataSource]="data" class="mat-elevation-z8">
         <ng-container matColumnDef="tid">
@@ -67,10 +67,22 @@
       <span *ngIf="fail">加载数据失败！</span>
     </ng-template>
   </div>
+  <mat-card class="info-card" *ngIf="loadSuccess">
+    <mat-card-title>
+      <mat-icon class="check-icon color-success">check_circle</mat-icon>以下{{dataSuccess.length}}个帖子检测通过
+    </mat-card-title>
+    <mat-card-content>
+      <a class="success-tid" mat-stroked-button color="primary" *ngFor="let oneData of dataSuccess"
+         [matTooltip]="'编辑时间: ' + oneData['edit_time']"
+         matTooltipPosition="above"
+         [href]="'https://www.mcbbs.net/thread-' + oneData['tid'] + '-1-1.html'"
+         target="_blank">{{oneData['tid']}}</a>
+    </mat-card-content>
+  </mat-card>
   <mat-card class="info-card">
     <mat-card-content>
       <div>
-        <span *ngIf="data">{{data.length}}个帖子已检测并等待版主审核(移出审核版才视为审核完毕)，</span><span>每隔6小时扫描一次审核版进行检测，试运行期间将显示违规原因。</span>
+        <span *ngIf="data">{{data.length + dataSuccess.length}}个帖子已检测并等待版主审核(移出审核版才视为审核完毕)，</span><span>每隔6小时扫描一次审核版进行检测，试运行期间将显示违规原因。</span>
       </div>
       <div *ngIf="data">
         <span>检测数据不代表版主立场，仅供参考，上一次数据更新于{{ updateTime }}</span>
