@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, HostListener } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
 import 'echarts/lib/chart/pie';
