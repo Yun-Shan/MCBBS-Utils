@@ -7,9 +7,16 @@
   position: relative;
 }
 
-.brand {
+.nav-button {
   @media (max-width: 600px) {
     display: none;
+  }
+}
+
+.nav-menu {
+  display: none;
+  @media (max-width: 600px) {
+    display: flex;
   }
 }
 
@@ -38,6 +45,9 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
+  @media (max-width: 600px) {
+    margin-top: 56px;
+  }
 }
 
 footer {
@@ -72,4 +82,21 @@ footer {
 
 .copyright {
   align-self: flex-end;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.sidenav-content {
+  @media (max-width: 600px) {
+    padding-top: 8px;
+  }
+}
+
+.sidenav-side {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }

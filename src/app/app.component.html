@@ -1,9 +1,12 @@
 <div class="wrapper">
   <header>
     <mat-toolbar color="primary">
+      <nav class="nav-menu">
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+      </nav>
       <span class="brand">{{ title }}</span>
       <span class="brand-spacer"></span>
-      <nav>
+      <nav class="nav-button">
         <button mat-button routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>
       </nav>
       <button mat-raised-button color="warn" *ngIf="logUpdate.update">已下载最新版本，请手动刷新页面更新！</button>
@@ -11,7 +14,17 @@
     </mat-toolbar>
   </header>
   <main>
-    <router-outlet></router-outlet>
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #sidenav mode="over" >
+        <div class="sidenav-side">
+          <button mat-stroked-button color="primary" routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="sidenav-content">
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </main>
   <footer>
     <!--

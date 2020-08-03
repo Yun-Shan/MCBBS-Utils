@@ -21,10 +21,12 @@ export class AppComponent implements OnInit {
       name: '自动化验证',
       path: '/server-validation/robot'
     },
+    /*
     {
       name: '用户信息',
       path: '/user'
     }
+    */
   ];
   readonly friendLink = [
   ];
