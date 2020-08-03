@@ -12,7 +12,7 @@ main > .ng-star-inserted {
   flex: 1;
 }
 
-mat-header-cell, mat-cell {
+th[mat-header-cell], td[mat-cell] {
   text-align: center;
 }
 
@@ -22,4 +22,35 @@ mat-header-cell, mat-cell {
 
 .server-post-content-tip {
   font-size: 15px;
+}
+
+.main-card {
+  margin-bottom: 27px;
+
+  mat-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+  }
+
+  mat-card-footer {
+    text-align: center;
+    color: dimgray;
+    padding-bottom: 7px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.color-success {
+  color: forestgreen;
+}
+
+.color-warning {
+  color: darkorange;
+}
+
+.color-fail {
+  color: indianred;
 }

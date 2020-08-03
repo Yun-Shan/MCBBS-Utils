@@ -8,6 +8,8 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ValidationService } from '../validation.service';
+
 
 @Component({
   selector: 'app-validation-robot',
@@ -53,7 +55,7 @@ export class ValidationRobotComponent implements AfterViewInit {
         name: '检测结果',
         type: 'pie',
         radius: '55%',
-        center: ['50%', '55%'],
+        center: ['50%', '60%'],
         minShowLabelAngle: 0.5,
         roseType: false,
         label: {
@@ -106,9 +108,9 @@ export class ValidationRobotComponent implements AfterViewInit {
   private readonly resizeEvent = new Subject();
   resultErrors: any;
 
-  constructor(private http: HttpClient) {
-    this.http.get(`/api/data/threads.json?r=${Math.random()}`).subscribe(
-      (res: any) => {
+  constructor(private validationService: ValidationService) {
+    this.validationService.getThreads().then(
+      res => {
         this.updateTime = res['update-time'];
         this.data = res.data
           .sort((a, b) => {
@@ -138,8 +140,8 @@ export class ValidationRobotComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const charts = echarts.init(document.getElementById('my-chart'));
     charts.setOption(this.option);
-    this.http.get(`/api/data/results.json?r=${Math.random()}`).subscribe(
-      (res: any) => {
+    this.validationService.getResults().then(
+      res => {
         const data = [
           /* tslint:disable:no-string-literal */
           {value: res.data['检查通过且和版主审核结果一致'], name: '检测通过且与版主一致'},
@@ -147,10 +149,11 @@ export class ValidationRobotComponent implements AfterViewInit {
           {value: res.data['检查通过但版主审核不通过'], name: '检测通过但版主审核不通过'},
           {value: res.data['检查不通过但版主审核通过'], name: '检测不通过但版主审核通过'},
         ];
+        const checkCount = res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致']
+          + res.data['检查通过但版主审核不通过'] + res.data['检查不通过但版主审核通过'];
         charts.setOption({
           title: {
-            text: `检测结果 - 已检测${res.data['检查通过且和版主审核结果一致'] + res.data['检查不通过且和版主审核结果一致']
-            + res.data['检查通过但版主审核不通过'] + res.data['检查不通过但版主审核通过']}个帖子`
+            text: `检测结果 - 已检测${checkCount}帖(次)`
           },
           series: [{data}]
         });

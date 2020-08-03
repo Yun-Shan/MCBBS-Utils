@@ -7,7 +7,7 @@ import { LogUpdateService } from './log-update.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  readonly title = 'MCBBS Utils';
+  readonly title = 'MCBBS工具箱';
   readonly navList = [
     {
       name: '首页',
@@ -15,11 +15,11 @@ export class AppComponent implements OnInit {
     },
     {
       name: '服务器帖验证',
-      path: '/post-validation/server'
+      path: '/server-validation/post'
     },
     {
       name: '自动化验证',
-      path: '/validation-robot/server'
+      path: '/server-validation/robot'
     },
     {
       name: '用户信息',

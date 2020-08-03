@@ -1,0 +1,80 @@
+<div class="wrapper">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title>帖子检测结果(tid: {{tid}})</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="loading">
+      加载中...
+    </mat-card-content>
+    <mat-card-content *ngIf="!loading">
+      <p *ngIf="!success">
+        加载失败
+      </p>
+      <mat-accordion *ngIf="success">
+        <mat-expansion-panel *ngFor="let result of data">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <ng-container [ngSwitch]="result.status">
+                <ng-container *ngSwitchCase="'error'">
+                  <mat-icon class="check-icon color-fail">error</mat-icon>
+                </ng-container>
+                <ng-container *ngSwitchCase="'warning'">
+                  <mat-icon class="check-icon color-warning">warning</mat-icon>
+                </ng-container>
+                <ng-container *ngSwitchCase="'success'">
+                  <mat-icon class="check-icon color-success">check_circle</mat-icon>
+                </ng-container>
+              </ng-container>
+              {{result.name}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngIf="result['checkList'].length">
+            <div *ngFor="let check of result['checkList']">
+              <mat-grid-list cols="4" rowHeight="40px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
+                  版规
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightblue'">
+                  {{check['rule']}}
+                </mat-grid-tile>
+                <ng-container *ngIf="check['detail']">
+                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightgreen'">
+                    详情
+                  </mat-grid-tile>
+                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightgreen'">
+                    {{check['detail']}}
+                  </mat-grid-tile>
+                </ng-container>
+                <ng-container *ngIf="check['expect']">
+                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightpink'">
+                    期望值
+                  </mat-grid-tile>
+                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightpink'">
+                    {{check['expect']}}
+                  </mat-grid-tile>
+                </ng-container>
+                <ng-container *ngIf="check['actually']">
+                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#DDBDF1'">
+                    实际值
+                  </mat-grid-tile>
+                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'#DDBDF1'">
+                    {{check['actually']}}
+                  </mat-grid-tile>
+                </ng-container>
+              </mat-grid-list>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!result['checkList'].length">
+            检测通过
+          </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+    <mat-card-actions>
+      <a color="primary" mat-raised-button
+         [href]="tid ? 'https://www.mcbbs.net/thread-' + tid + '-1-1.html' : 'javascript:void;'"
+         target="_blank">打开帖子</a>
+      <a color="primary" mat-raised-button href="javascript:history.back();">返回上一页</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

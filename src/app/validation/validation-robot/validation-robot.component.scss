@@ -13,27 +13,12 @@
   }
 }
 
-.main-card {
-  margin-bottom: 27px;
-
-  mat-card-title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 20px;
-  }
-
-  mat-card-footer {
-    text-align: center;
-    color: dimgray;
-    padding-bottom: 7px;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
 table {
   width: 100%;
+}
+
+tr.check-row:hover {
+  background: whitesmoke;
 }
 
 th[mat-header-cell], td[mat-cell] {
@@ -42,18 +27,6 @@ th[mat-header-cell], td[mat-cell] {
 
 .check-icon {
   font-size: x-large;
-}
-
-.check-icon-success {
-  color: forestgreen;
-}
-
-.check-icon-warning {
-  color: darkorange;
-}
-
-.check-icon-fail {
-  color: indianred;
 }
 
 /* Column Widths */
