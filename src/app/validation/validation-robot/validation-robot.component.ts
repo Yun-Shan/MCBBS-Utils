@@ -9,6 +9,7 @@ import 'echarts/lib/component/title';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ValidationService } from '../validation.service';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class ValidationRobotComponent implements AfterViewInit {
   updateTime: string;
 
   readonly displayedColumns = ['tid', 'edit_time', 'check_result'];
+  readonly displayedColumnsSmall = ['tid', 'check_result'];
   private readonly option = {
     backgroundColor: '#eaeaea',
 
@@ -108,7 +110,16 @@ export class ValidationRobotComponent implements AfterViewInit {
   private readonly resizeEvent = new Subject();
   resultErrors: any;
 
-  constructor(private validationService: ValidationService) {
+  isSmallScreen = false;
+
+  constructor(private validationService: ValidationService,
+              breakpointObserver: BreakpointObserver) {
+    breakpointObserver
+      .observe(['(max-width: 599px)'])
+      .subscribe((breakpointState: BreakpointState) => {
+        return this.isSmallScreen = breakpointState.matches;
+      });
+
     this.validationService.getThreads().then(
       res => {
         this.updateTime = res['update-time'];
