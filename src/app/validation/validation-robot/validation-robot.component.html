@@ -24,7 +24,7 @@
           <td mat-cell *matCellDef="let element">
             <a mat-stroked-button color="primary"
                [href]="'https://www.mcbbs.net/thread-' + element['tid'] + '-1-1.html'"
-               target="_blank">{{element['tid']}}</a></td>
+               target="_blank" rel="nofollow noopener noreferrer">{{element['tid']}}</a></td>
         </ng-container>
 
         <ng-container matColumnDef="edit_time">
@@ -76,7 +76,7 @@
          [matTooltip]="'编辑时间: ' + oneData['edit_time']"
          matTooltipPosition="above"
          [href]="'https://www.mcbbs.net/thread-' + oneData['tid'] + '-1-1.html'"
-         target="_blank">{{oneData['tid']}}</a>
+         target="_blank" rel="nofollow noopener noreferrer">{{oneData['tid']}}</a>
     </mat-card-content>
   </mat-card>
   <mat-card class="info-card">
