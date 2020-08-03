@@ -9,7 +9,6 @@
       <nav class="nav-button">
         <button mat-button routerLink="{{ it.path }}" *ngFor="let it of navList">{{ it.name }}</button>
       </nav>
-      <button mat-raised-button color="warn" *ngIf="logUpdate.update">已下载最新版本，请手动刷新页面更新！</button>
       <span class="flex-space"></span>
     </mat-toolbar>
   </header>

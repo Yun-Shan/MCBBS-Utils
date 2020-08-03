@@ -49,7 +49,10 @@
                 </button>
               </div>
               <div *ngSwitchCase="0">
-                <mat-icon class="check-icon color-success">check_circle</mat-icon>
+                <button mat-stroked-button disabled>
+                  <mat-icon class="check-icon color-success">check_circle</mat-icon>
+                  检测通过
+                </button>
               </div>
             </div>
           </td>
@@ -70,7 +73,7 @@
         <span *ngIf="data">{{data.length}}个帖子已检测并等待版主审核(移出审核版才视为审核完毕)，</span><span>每隔6小时扫描一次审核版进行检测，试运行期间将显示违规原因。</span>
       </div>
       <div *ngIf="data">
-        <span>上一次数据更新于{{ updateTime }}</span>
+        <span>检测数据不代表版主立场，仅供参考，上一次数据更新于{{ updateTime }}</span>
       </div>
     </mat-card-content>
   </mat-card>

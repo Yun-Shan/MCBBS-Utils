@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
   ];
   year: number;
 
-  constructor(public logUpdate: LogUpdateService) {
+  constructor(logUpdate: LogUpdateService) {
+    logUpdate.noOp();
   }
 
   ngOnInit(): void {
