@@ -44,7 +44,7 @@ footer {
   position: relative;
   height: 90px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: left;
   background-color: #E9E9E9;
@@ -66,3 +66,10 @@ footer {
   margin-left: 50px;
 }
 
+.feedback {
+  align-self: center;
+}
+
+.copyright {
+  align-self: flex-end;
+}

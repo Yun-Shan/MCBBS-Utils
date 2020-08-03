@@ -32,6 +32,7 @@ export class ValidationResultComponent implements OnInit {
             this.success = false;
           }
           this.loading = false;
+          document.body.scrollTop = document.documentElement.scrollTop = 0;
         }, _ => {
           this.success = false;
           this.loading = false;

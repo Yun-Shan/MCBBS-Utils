@@ -12,3 +12,25 @@
     margin: 2% 3%;
   }
 }
+
+.check-result {
+  padding-bottom: 7px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.check-result-left {
+  width: 20%;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check-result-right {
+  width: 70%;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

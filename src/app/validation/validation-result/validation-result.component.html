@@ -29,39 +29,21 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <ng-container *ngIf="result['checkList'].length">
-            <div *ngFor="let check of result['checkList']">
-              <mat-grid-list cols="4" rowHeight="40px">
-                <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
-                  版规
-                </mat-grid-tile>
-                <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightblue'">
-                  {{check['rule']}}
-                </mat-grid-tile>
+            <div class="check-result" *ngFor="let check of result['checkList']">
+                <div class="check-result-left" [style.background]="'lightblue'">版规</div>
+                <div class="check-result-right" [style.background]="'lightblue'">{{check['rule']}}</div>
                 <ng-container *ngIf="check['detail']">
-                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightgreen'">
-                    详情
-                  </mat-grid-tile>
-                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightgreen'">
-                    {{check['detail']}}
-                  </mat-grid-tile>
+                  <div class="check-result-left" [style.background]="'lightgreen'">详情</div>
+                  <div class="check-result-right" [style.background]="'lightgreen'">{{check['detail']}}</div>
                 </ng-container>
                 <ng-container *ngIf="check['expect']">
-                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightpink'">
-                    期望值
-                  </mat-grid-tile>
-                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightpink'">
-                    {{check['expect']}}
-                  </mat-grid-tile>
+                  <div class="check-result-left" [style.background]="'lightpink'">期望值</div>
+                  <div class="check-result-right" [style.background]="'lightpink'">{{check['expect']}}</div>
                 </ng-container>
                 <ng-container *ngIf="check['actually']">
-                  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'#DDBDF1'">
-                    实际值
-                  </mat-grid-tile>
-                  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'#DDBDF1'">
-                    {{check['actually']}}
-                  </mat-grid-tile>
+                  <div class="check-result-left" [style.background]="'#DDBDF1'">实际值</div>
+                  <div class="check-result-right" [style.background]="'#DDBDF1'">{{check['actually']}}</div>
                 </ng-container>
-              </mat-grid-list>
             </div>
           </ng-container>
           <ng-container *ngIf="!result['checkList'].length">

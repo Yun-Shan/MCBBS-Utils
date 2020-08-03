@@ -41,6 +41,7 @@ export class ValidationRobotComponent implements AfterViewInit {
 
     tooltip: {
       trigger: 'item',
+      confine: true,
       formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
 
