@@ -8,7 +8,7 @@
     </mat-card-content>
     <mat-card-content *ngIf="!loading">
       <p *ngIf="!success">
-        加载失败
+        该帖子尚未被检测
       </p>
       <mat-accordion *ngIf="success">
         <mat-expansion-panel *ngFor="let result of data">
@@ -56,7 +56,7 @@
       <a color="primary" mat-raised-button
          [href]="tid ? 'https://www.mcbbs.net/thread-' + tid + '-1-1.html' : 'javascript:void;'"
          target="_blank" rel="nofollow noopener noreferrer">打开帖子</a>
-      <a color="primary" mat-raised-button href="javascript:history.back();">返回上一页</a>
+      <button color="primary" mat-raised-button routerLink="/server-validation/robot">返回列表</button>
     </mat-card-actions>
   </mat-card>
 </div>
