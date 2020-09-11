@@ -30,20 +30,28 @@
           </mat-expansion-panel-header>
           <ng-container *ngIf="result['checkList'].length">
             <div class="check-result" *ngFor="let check of result['checkList']">
-                <div class="check-result-left" [style.background]="'lightblue'">版规</div>
-                <div class="check-result-right" [style.background]="'lightblue'">{{check['rule']}}</div>
-                <ng-container *ngIf="check['detail']">
-                  <div class="check-result-left" [style.background]="'lightgreen'">详情</div>
-                  <div class="check-result-right" [style.background]="'lightgreen'">{{check['detail']}}</div>
-                </ng-container>
-                <ng-container *ngIf="check['expect']">
-                  <div class="check-result-left" [style.background]="'lightpink'">期望值</div>
-                  <div class="check-result-right" [style.background]="'lightpink'">{{check['expect']}}</div>
-                </ng-container>
-                <ng-container *ngIf="check['actually']">
-                  <div class="check-result-left" [style.background]="'#DDBDF1'">实际值</div>
-                  <div class="check-result-right" [style.background]="'#DDBDF1'">{{check['actually']}}</div>
-                </ng-container>
+              <div class="check-result-left" [style.background]="'lightblue'">版规</div>
+              <div class="check-result-right" [style.background]="'lightblue'">
+                <pre>{{(check['type'] === 'warning' ? '[警告]' : '') + check['rule']}}</pre>
+              </div>
+              <ng-container *ngIf="check['detail']">
+                <div class="check-result-left" [style.background]="'lightgreen'">详情</div>
+                <div class="check-result-right" [style.background]="'lightgreen'">
+                  <pre>{{check['detail']}}</pre>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="check['expect']">
+                <div class="check-result-left" [style.background]="'lightpink'">期望值</div>
+                <div class="check-result-right" [style.background]="'lightpink'">
+                  <pre>{{check['expect']}}</pre>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="check['actually']">
+                <div class="check-result-left" [style.background]="'#DDBDF1'">实际值</div>
+                <div class="check-result-right" [style.background]="'#DDBDF1'">
+                  <pre>{{check['actually']}}</pre>
+                </div>
+              </ng-container>
             </div>
           </ng-container>
           <ng-container *ngIf="!result['checkList'].length">
