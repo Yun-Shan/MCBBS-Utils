@@ -13,6 +13,8 @@ const routes: Routes = [
       {path: '**', component: ValidationRobotComponent}
     ]
   },
+  {path: 'validation-robot/server', redirectTo: 'server-validation/robot'},
+  {path: 'forum-validation/server', redirectTo: 'server-validation/post'},
 ];
 
 @NgModule({
